@@ -13,10 +13,11 @@
   <header class="site-header">
     <nav class="navbar">
       <a href="#" class="logo">School<span>OS</span></a>
-      <button class="menu-toggle" aria-label="Open navigation menu">☰</button>
+      <button class="menu-toggle" aria-label="Open navigation menu">&#9776;</button>
       <div class="nav-links">
+        <a href="#contact" class="admin-menu-link">Admin</a>
+        <a href="teacher-login.html" class="teacher-menu-link">Teacher's Login</a>
         <a href="#features">Features</a>
-        <a href="#platform">Platform</a>
         <a href="#analytics">Analytics</a>
         <a href="#contact" class="nav-cta">Request Demo</a>
       </div>
@@ -58,17 +59,6 @@
       </div>
     </section>
 
-    <section id="platform" class="intro section-padding">
-      <div class="section-heading">
-        <p class="eyebrow">One connected platform</p>
-        <h2>Simplify daily school operations.</h2>
-        <p>
-          Replace paperwork and disconnected tools with a single system built for administrators,
-          teachers, parents, and students.
-        </p>
-      </div>
-    </section>
-
     <section id="features" class="features section-padding">
       <div class="section-heading">
         <p class="eyebrow">Core modules</p>
@@ -84,6 +74,41 @@
         <article class="feature-card"><span>👨‍👩‍👧</span><h3>Parent Portal</h3><p>Give parents secure access to attendance, fees, results, and announcements.</p></article>
         <article class="feature-card"><span>📲</span><h3>Notifications</h3><p>Send instant SMS and WhatsApp updates for reminders and school news.</p></article>
         <article class="feature-card"><span>📊</span><h3>Analytics Dashboard</h3><p>View admissions, attendance, fee collection, and academic performance insights.</p></article>
+      </div>
+    </section>
+
+    <section id="school-gallery" class="gallery-section section-padding">
+      <div class="gallery-header">
+        <div>
+          <p class="eyebrow">School gallery</p>
+          <h2>See campus life at a glance.</h2>
+          <p>Share events, classrooms, achievements, and school moments with parents and visitors.</p>
+        </div>
+        <a href="#school-gallery" class="btn btn-gallery">School Gallery</a>
+      </div>
+
+      <div class="gallery-grid">
+        <article class="gallery-card">
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHN0dWRlbnRzJTIwbGVhcm5pbmd8ZW58MHx8MHx8fDA%3D" alt="Students walking on a school campus">
+          <div>
+            <span>Campus</span>
+            <h3>Learning spaces</h3>
+          </div>
+        </article>
+        <article class="gallery-card">
+          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80" alt="Teacher helping students in class">
+          <div>
+            <span>Classrooms</span>
+            <h3>Active lessons</h3>
+          </div>
+        </article>
+        <article class="gallery-card">
+          <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=900&q=80" alt="Students working together on a project">
+          <div>
+            <span>Activities</span>
+            <h3>Student projects</h3>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -114,10 +139,36 @@
       </form>
       <p class="form-message" aria-live="polite"></p>
     </section>
+
+    <section class="final-contact" aria-labelledby="final-contact-title">
+      <div class="final-contact-copy">
+        <p class="eyebrow">Contact us</p>
+        <h2 id="final-contact-title">Reach School OS directly.</h2>
+        <p>Tap a button below to message, call, follow, or save our contact details.</p>
+      </div>
+      <div class="final-contact-actions">
+        <a class="contact-button contact-button-whatsapp" data-contact-link="whatsapp" href="#" target="_blank" rel="noopener">
+          <span>WhatsApp</span>
+          <strong data-contact-text="whatsapp">Message us</strong>
+        </a>
+        <a class="contact-button contact-button-phone" data-contact-link="phone" href="#">
+          <span>Phone</span>
+          <strong data-contact-text="phone">Call us</strong>
+        </a>
+        <a class="contact-button contact-button-tiktok" data-contact-link="tiktok" href="#" target="_blank" rel="noopener">
+          <span>TikTok</span>
+          <strong data-contact-text="tiktok">Follow us</strong>
+        </a>
+        <a class="contact-button contact-button-save" data-contact-link="save" href="#" download="School-OS.vcf">
+          <span>Contact Card</span>
+          <strong>Save contact</strong>
+        </a>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <p>© 2026 School OS. All rights reserved.</p>
+    <p>&copy; 2026 School OS. All rights reserved.</p>
   </footer>
 
   <script src="script.js"></script>
