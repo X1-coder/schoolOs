@@ -1,176 +1,847 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>School OS | All-in-One School Management System</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School OS - Run Your Entire School From One Intelligent Platform</title>
+    <meta name="description" content="School OS manages students, teachers, attendance, exams, fees, communication, and analytics in one powerful platform." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/print.css" media="print" />
 </head>
 <body>
-  <header class="site-header">
-    <nav class="navbar">
-      <a href="#" class="logo">School<span>OS</span></a>
-      <button class="menu-toggle" aria-label="Open navigation menu">&#9776;</button>
-      <div class="nav-links">
-        <a href="#contact" class="admin-menu-link">Admin</a>
-        <a href="teacher-login.html" class="teacher-menu-link">Teacher's Login</a>
-        <a href="#features">Features</a>
-        <a href="#analytics">Analytics</a>
-        <a href="#contact" class="nav-cta">Request Demo</a>
-      </div>
+
+    <!-- ===== COOKIE CONSENT ===== -->
+    <div class="cookie-consent" id="cookieConsent">
+        <div class="cookie-content">
+            <p>We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="cookie-buttons">
+                <button class="btn btn-primary btn-sm" onclick="acceptCookies()">Accept</button>
+                <button class="btn btn-outline btn-sm" onclick="declineCookies()">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== READING PROGRESS BAR ===== -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container nav-container">
+            <a href="#home" class="nav-logo" aria-label="School OS Home">
+                <div class="logo-icon" aria-hidden="true">
+                    <span>S</span>
+                </div>
+                <span class="logo-text">School OS</span>
+            </a>
+
+            <!-- Search -->
+            <div class="nav-search">
+                <input type="text" id="searchInput" placeholder="Search..." aria-label="Search" />
+                <button onclick="performSearch()" aria-label="Search"><i class="fas fa-search"></i></button>
+            </div>
+
+            <ul class="nav-links" id="navLinks" role="menubar">
+                <li role="none"><a href="#home" class="nav-link active" role="menuitem" data-section="home">Home</a></li>
+                <li role="none"><a href="#features" class="nav-link" role="menuitem" data-section="features">Features</a></li>
+                <li role="none"><a href="#pricing" class="nav-link" role="menuitem" data-section="pricing">Pricing</a></li>
+                <li role="none"><a href="#about" class="nav-link" role="menuitem" data-section="about">About</a></li>
+                <li role="none"><a href="#faq" class="nav-link" role="menuitem" data-section="faq">FAQ</a></li>
+                <li role="none"><a href="#contact" class="nav-link" role="menuitem" data-section="contact">Contact</a></li>
+                <li class="nav-mobile-actions" role="none">
+                    <button class="btn btn-outline btn-sm" onclick="handleLogin()">Login</button>
+                    <button class="btn btn-primary btn-sm" onclick="handleDemo()">Book Demo</button>
+                </li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="btn btn-outline btn-sm" onclick="handleLogin()">Login</button>
+                <button class="btn btn-primary btn-sm" onclick="handleDemo()">Book Demo</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- Share Button -->
+                <div class="btn-share" id="shareButton" aria-label="Share this page">
+                    <i class="fas fa-share-alt"></i>
+                    <span class="tooltip">Share</span>
+                    <div class="share-dropdown" id="shareDropdown">
+                        <button class="share-dropdown-item" onclick="sharePage('whatsapp')">
+                            <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                            WhatsApp
+                        </button>
+                        <button class="share-dropdown-item" onclick="sharePage('facebook')">
+                            <i class="fab fa-facebook" style="color: #1877F2;"></i>
+                            Facebook
+                        </button>
+                        <button class="share-dropdown-item" onclick="sharePage('twitter')">
+                            <i class="fab fa-twitter" style="color: #1DA1F2;"></i>
+                            Twitter
+                        </button>
+                        <button class="share-dropdown-item" onclick="sharePage('linkedin')">
+                            <i class="fab fa-linkedin" style="color: #0A66C2;"></i>
+                            LinkedIn
+                        </button>
+                        <button class="share-dropdown-item" onclick="sharePage('email')">
+                            <i class="fas fa-envelope" style="color: #EA4335;"></i>
+                            Email
+                        </button>
+                        <button class="share-dropdown-item" onclick="sharePage('copy')">
+                            <i class="fas fa-copy" style="color: var(--text-muted);"></i>
+                            Copy Link
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </nav>
-  </header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-content">
-        <p class="eyebrow">Modern school management made simple</p>
-        <h1>Run your entire school from one powerful operating system.</h1>
-        <p class="hero-text">
-          School OS helps schools manage admissions, attendance, fees, exams,
-          report cards, parent communication, and analytics in one easy platform.
-        </p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Book a Free Demo</a>
-          <a href="#features" class="btn btn-secondary">Explore Features</a>
+    <!-- ===== OVERLAY ===== -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- ===== LIVE CLOCK ===== -->
+    <div class="live-clock" id="liveClock">
+        <i class="fas fa-clock"></i>
+        <span id="clockDisplay">Loading...</span>
+    </div>
+
+    <!-- ===== BACK TO TOP ===== -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero" id="home" aria-label="Hero section">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-sparkles" aria-hidden="true"></i>
+                    Next-Gen School Management
+                </div>
+                <h1 class="hero-title">
+                    Run Your Entire School From One
+                    <span class="gradient-text">Intelligent Platform</span>
+                </h1>
+                <p class="hero-subtitle">
+                    School OS manages students, teachers, attendance, exams, fees, 
+                    communication, and analytics in one powerful, easy-to-use system.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-lg" onclick="handleDemo()">
+                        Book a Demo <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-outline btn-lg" onclick="startProductTour()">Take a Tour</button>
+                </div>
+                <div class="hero-features">
+                    <span><i class="fas fa-check-circle text-emerald-500" aria-hidden="true"></i> 14-day free trial</span>
+                    <span><i class="fas fa-check-circle text-emerald-500" aria-hidden="true"></i> No credit card required</span>
+                    <span><i class="fas fa-check-circle text-emerald-500" aria-hidden="true"></i> 24/7 support</span>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="dashboard-mockup">
+                    <div class="dashboard-placeholder" onclick="openLightbox('assets/images/screenshots/dashboard.jpg')">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Dashboard Preview</p>
+                        <span style="font-size: 0.875rem; opacity: 0.7;">Click to view full size</span>
+                    </div>
+                    <div class="floating-card floating-card-1">
+                        <div class="fc-icon bg-emerald-100">
+                            <i class="fas fa-users text-emerald-600" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <p class="fc-value">+145</p>
+                            <p class="fc-label">New Students</p>
+                        </div>
+                    </div>
+                    <div class="floating-card floating-card-2">
+                        <div class="fc-icon bg-blue-100">
+                            <i class="fas fa-chart-bar text-blue-600" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <p class="fc-value">98%</p>
+                            <p class="fc-label">Attendance Rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="hero-card">
-        <div class="dashboard-card">
-          <div class="card-header">
-            <span></span><span></span><span></span>
-          </div>
-          <h3>School Activity</h3>
-          <div class="stat-grid">
-            <div><strong>1,240</strong><small>Students</small></div>
-            <div><strong>96%</strong><small>Attendance</small></div>
-            <div><strong>82%</strong><small>Fees Paid</small></div>
-            <div><strong>18</strong><small>New Admissions</small></div>
-          </div>
-          <div class="progress-list">
-            <p>Exam Results <span>78%</span></p><div><span style="width:78%"></span></div>
-            <p>Parent Engagement <span>91%</span></p><div><span style="width:91%"></span></div>
-            <p>Fee Collection <span>82%</span></p><div><span style="width:82%"></span></div>
-          </div>
+    </section>
+
+    <!-- ===== LIGHTBOX ===== -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightboxImage" alt="Screenshot" />
+    </div>
+
+    <!-- ===== TRUSTED BY ===== -->
+    <section class="trusted" aria-label="Trusted by section">
+        <div class="container">
+            <p class="trusted-label">Trusted by innovative schools across Ghana</p>
+            <div class="trusted-logos">
+                <span>Achimota School</span>
+                <span>Mfantsiman Girls</span>
+                <span>Wesley Girls</span>
+                <span>Prempeh College</span>
+                <span>St. Augustine's</span>
+            </div>
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-item">
+                    <i class="fas fa-building" aria-hidden="true"></i>
+                    <span class="stat-number" data-count="250">0</span>
+                    <span class="stat-label">Schools Onboarded</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-users" aria-hidden="true"></i>
+                    <span class="stat-number" data-count="15000">0</span>
+                    <span class="stat-label">Students Managed</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-calendar" aria-hidden="true"></i>
+                    <span class="stat-number" data-count="500000">0</span>
+                    <span class="stat-label">Attendance Records</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-book" aria-hidden="true"></i>
+                    <span class="stat-number" data-count="12000">0</span>
+                    <span class="stat-label">Exams Generated</span>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <section id="features" class="features section-padding">
-      <div class="section-heading">
-        <p class="eyebrow">Core modules</p>
-        <h2>Everything your school needs in one place.</h2>
-      </div>
-
-      <div class="feature-grid">
-        <article class="feature-card"><span>🎓</span><h3>Admissions</h3><p>Manage applications, registrations, and enrollment records digitally.</p></article>
-        <article class="feature-card"><span>✅</span><h3>Attendance</h3><p>Track daily attendance, view history, and identify student patterns quickly.</p></article>
-        <article class="feature-card"><span>💳</span><h3>Fees & Payments</h3><p>Handle invoices, balances, receipts, and payment records with clarity.</p></article>
-        <article class="feature-card"><span>📝</span><h3>Exams</h3><p>Create exams, enter scores, calculate grades, and reduce manual errors.</p></article>
-        <article class="feature-card"><span>📄</span><h3>Report Cards</h3><p>Generate professional report cards using real student performance data.</p></article>
-        <article class="feature-card"><span>👨‍👩‍👧</span><h3>Parent Portal</h3><p>Give parents secure access to attendance, fees, results, and announcements.</p></article>
-        <article class="feature-card"><span>📲</span><h3>Notifications</h3><p>Send instant SMS and WhatsApp updates for reminders and school news.</p></article>
-        <article class="feature-card"><span>📊</span><h3>Analytics Dashboard</h3><p>View admissions, attendance, fee collection, and academic performance insights.</p></article>
-      </div>
-    </section>
-
-    <section id="school-gallery" class="gallery-section section-padding">
-      <div class="gallery-header">
-        <div>
-          <p class="eyebrow">School gallery</p>
-          <h2>See campus life at a glance.</h2>
-          <p>Share events, classrooms, achievements, and school moments with parents and visitors.</p>
+    <!-- ===== WHY SCHOOL OS ===== -->
+    <section class="why" id="about" aria-label="Why School OS">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why School OS?</h2>
+                <p>Built for efficiency, designed for the future of education</p>
+            </div>
+            <div class="why-grid stagger-children">
+                <div class="why-card">
+                    <div class="why-icon bg-blue-100"><i class="fas fa-clock text-blue-600" aria-hidden="true"></i></div>
+                    <h3>Save Administrative Time</h3>
+                    <p>Automate routine tasks and reduce paperwork by up to 60%.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon bg-emerald-100"><i class="fas fa-file-pdf text-emerald-600" aria-hidden="true"></i></div>
+                    <h3>Reduce Paperwork</h3>
+                    <p>Go digital with all records, forms, and communications.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon bg-purple-100"><i class="fas fa-comments text-purple-600" aria-hidden="true"></i></div>
+                    <h3>Improve Communication</h3>
+                    <p>Bridge the gap between school, teachers, and parents.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon bg-orange-100"><i class="fas fa-globe text-orange-600" aria-hidden="true"></i></div>
+                    <h3>Access From Anywhere</h3>
+                    <p>Cloud-based platform available 24/7 on any device.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon bg-red-100"><i class="fas fa-shield-alt text-red-600" aria-hidden="true"></i></div>
+                    <h3>Secure Cloud Platform</h3>
+                    <p>Enterprise-grade security with automatic backups.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon bg-indigo-100"><i class="fas fa-school text-indigo-600" aria-hidden="true"></i></div>
+                    <h3>Multi-School Support</h3>
+                    <p>Manage multiple campuses from a single account.</p>
+                </div>
+            </div>
         </div>
-        <a href="#school-gallery" class="btn btn-gallery">School Gallery</a>
-      </div>
-
-      <div class="gallery-grid">
-        <article class="gallery-card">
-          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHN0dWRlbnRzJTIwbGVhcm5pbmd8ZW58MHx8MHx8fDA%3D" alt="Students walking on a school campus">
-          <div>
-            <span>Campus</span>
-            <h3>Learning spaces</h3>
-          </div>
-        </article>
-        <article class="gallery-card">
-          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80" alt="Teacher helping students in class">
-          <div>
-            <span>Classrooms</span>
-            <h3>Active lessons</h3>
-          </div>
-        </article>
-        <article class="gallery-card">
-          <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=900&q=80" alt="Students working together on a project">
-          <div>
-            <span>Activities</span>
-            <h3>Student projects</h3>
-          </div>
-        </article>
-      </div>
     </section>
 
-    <section id="analytics" class="split section-padding">
-      <div>
-        <p class="eyebrow">Built for better decisions</p>
-        <h2>Clear insights for school leaders.</h2>
-        <p>
-          Track what matters most with simple dashboards that help your school act faster,
-          communicate better, and improve performance.
-        </p>
-      </div>
-      <div class="metric-panel">
-        <div><strong>40%</strong><span>Less admin work</span></div>
-        <div><strong>2x</strong><span>Faster reporting</span></div>
-        <div><strong>24/7</strong><span>Parent access</span></div>
-      </div>
+    <!-- ===== FEATURES ===== -->
+    <section class="features" id="features" aria-label="Features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Everything You Need to Run Your School</h2>
+                <p>Comprehensive features designed for modern educational institutions</p>
+            </div>
+            
+            <div class="feature-grid stagger-children">
+                <div class="feature-card" data-feature="admissions">
+                    <div class="feature-icon bg-blue-100"><i class="fas fa-graduation-cap text-blue-600" aria-hidden="true"></i></div>
+                    <h3>Admissions</h3>
+                    <p>Streamline applications, enrollment, and student onboarding with digital forms and automated workflows.</p>
+                </div>
+                <div class="feature-card" data-feature="students">
+                    <div class="feature-icon bg-emerald-100"><i class="fas fa-users text-emerald-600" aria-hidden="true"></i></div>
+                    <h3>Student Management</h3>
+                    <p>Centralize student profiles, academic records, health info, and family details securely.</p>
+                </div>
+                <div class="feature-card" data-feature="teachers">
+                    <div class="feature-icon bg-purple-100"><i class="fas fa-user-check text-purple-600" aria-hidden="true"></i></div>
+                    <h3>Teacher Management</h3>
+                    <p>Manage teacher profiles, schedules, certifications, and performance reviews effortlessly.</p>
+                </div>
+                <div class="feature-card" data-feature="attendance">
+                    <div class="feature-icon bg-orange-100"><i class="fas fa-calendar-check text-orange-600" aria-hidden="true"></i></div>
+                    <h3>Attendance</h3>
+                    <p>Track attendance in real-time with automated notifications and insightful analytics.</p>
+                </div>
+                <div class="feature-card" data-feature="fees">
+                    <div class="feature-icon bg-red-100"><i class="fas fa-money-bill-wave text-red-600" aria-hidden="true"></i></div>
+                    <h3>Fees & Payments</h3>
+                    <p>Simplify fee collection with online payments, automated invoices, and financial reporting.</p>
+                </div>
+                <div class="feature-card" data-feature="exams">
+                    <div class="feature-icon bg-indigo-100"><i class="fas fa-book-open text-indigo-600" aria-hidden="true"></i></div>
+                    <h3>Examinations</h3>
+                    <p>Create, administer, and grade exams with a comprehensive assessment management system.</p>
+                </div>
+                <div class="feature-card" data-feature="reports">
+                    <div class="feature-icon bg-pink-100"><i class="fas fa-chart-pie text-pink-600" aria-hidden="true"></i></div>
+                    <h3>Report Cards</h3>
+                    <p>Generate detailed, customizable report cards and academic transcripts instantly.</p>
+                </div>
+                <div class="feature-card" data-feature="parents">
+                    <div class="feature-icon bg-teal-100"><i class="fas fa-users-cog text-teal-600" aria-hidden="true"></i></div>
+                    <h3>Parent Portal</h3>
+                    <p>Foster collaboration with a dedicated portal for parents to track progress and communication.</p>
+                </div>
+                <div class="feature-card" data-feature="notifications">
+                    <div class="feature-icon bg-yellow-100"><i class="fas fa-bell text-yellow-600" aria-hidden="true"></i></div>
+                    <h3>Notifications</h3>
+                    <p>Send real-time alerts, announcements, and reminders to staff, students, and parents.</p>
+                </div>
+                <div class="feature-card" data-feature="analytics">
+                    <div class="feature-icon bg-cyan-100"><i class="fas fa-chart-line text-cyan-600" aria-hidden="true"></i></div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Gain actionable insights with visual analytics on performance, attendance, and finances.</p>
+                </div>
+                <div class="feature-card" data-feature="security">
+                    <div class="feature-icon bg-rose-100"><i class="fas fa-lock text-rose-600" aria-hidden="true"></i></div>
+                    <h3>Role-based Access</h3>
+                    <p>Ensure security and privacy with fine-grained access controls for every user role.</p>
+                </div>
+                <div class="feature-card" data-feature="backup">
+                    <div class="feature-icon bg-sky-100"><i class="fas fa-cloud text-sky-600" aria-hidden="true"></i></div>
+                    <h3>Cloud Backup</h3>
+                    <p>Automatic, secure cloud backups so your data is always safe and recoverable.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section id="contact" class="cta">
-      <h2>Ready to simplify school management?</h2>
-      <p>Start using School OS to improve operations, communication, and reporting.</p>
-      <form class="demo-form">
-        <input type="text" placeholder="Your name" required>
-        <input type="email" placeholder="Email address" required>
-        <input type="text" placeholder="School name" required>
-        <button type="submit" class="btn btn-primary">Request Demo</button>
-      </form>
-      <p class="form-message" aria-live="polite"></p>
+    <!-- ===== PRODUCT SCREENSHOTS ===== -->
+    <section class="screenshots" aria-label="Product screenshots">
+        <div class="container">
+            <div class="section-header">
+                <h2>See School OS in Action</h2>
+                <p>Explore our intuitive dashboards and interfaces</p>
+            </div>
+            <div class="screenshot-grid">
+                <div class="screenshot-item" onclick="openLightbox('assets/images/screenshots/dashboard.jpg')">
+                    <div class="screenshot-placeholder">
+                        <i class="fas fa-th-large"></i>
+                        <p>Admin Dashboard</p>
+                    </div>
+                </div>
+                <div class="screenshot-item" onclick="openLightbox('assets/images/screenshots/attendance.jpg')">
+                    <div class="screenshot-placeholder">
+                        <i class="fas fa-calendar-check"></i>
+                        <p>Attendance View</p>
+                    </div>
+                </div>
+                <div class="screenshot-item" onclick="openLightbox('assets/images/screenshots/analytics.jpg')">
+                    <div class="screenshot-placeholder">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Analytics Dashboard</p>
+                    </div>
+                </div>
+                <div class="screenshot-item" onclick="openLightbox('assets/images/screenshots/mobile.jpg')">
+                    <div class="screenshot-placeholder">
+                        <i class="fas fa-mobile-alt"></i>
+                        <p>Mobile Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="final-contact" aria-labelledby="final-contact-title">
-      <div class="final-contact-copy">
-        <p class="eyebrow">Contact us</p>
-        <h2 id="final-contact-title">Reach School OS directly.</h2>
-        <p>Tap a button below to message, call, follow, or save our contact details.</p>
-      </div>
-      <div class="final-contact-actions">
-        <a class="contact-button contact-button-whatsapp" data-contact-link="whatsapp" href="#" target="_blank" rel="noopener">
-          <span>WhatsApp</span>
-          <strong data-contact-text="whatsapp">Message us</strong>
-        </a>
-        <a class="contact-button contact-button-phone" data-contact-link="phone" href="#">
-          <span>Phone</span>
-          <strong data-contact-text="phone">Call us</strong>
-        </a>
-        <a class="contact-button contact-button-tiktok" data-contact-link="tiktok" href="#" target="_blank" rel="noopener">
-          <span>TikTok</span>
-          <strong data-contact-text="tiktok">Follow us</strong>
-        </a>
-        <a class="contact-button contact-button-save" data-contact-link="save" href="#" download="School-OS.vcf">
-          <span>Contact Card</span>
-          <strong>Save contact</strong>
-        </a>
-      </div>
+    <!-- ===== AI ASSISTANT ===== -->
+    <section class="ai-section" id="ai-section" aria-label="AI Assistant">
+        <div class="container">
+            <div class="ai-container">
+                <div class="ai-content">
+                    <div class="ai-badge">
+                        <i class="fas fa-robot" aria-hidden="true"></i> AI-Powered Assistant
+                    </div>
+                    <h2>Meet Your AI Assistant</h2>
+                    <p class="ai-description">
+                        Powered by advanced AI, our assistant helps you manage tasks with simple voice or text commands.
+                    </p>
+                    <div class="ai-examples">
+                        <div class="ai-example">
+                            <div class="ai-example-icon bg-blue-100">
+                                <i class="fas fa-chalkboard-teacher text-blue-600" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <p class="ai-example-command">"Mark everyone present except John."</p>
+                                <p class="ai-example-result">AI automatically records attendance</p>
+                            </div>
+                        </div>
+                        <div class="ai-example">
+                            <div class="ai-example-icon bg-purple-100">
+                                <i class="fas fa-user-graduate text-purple-600" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <p class="ai-example-command">"Show students with attendance below 70%"</p>
+                                <p class="ai-example-result">AI generates instant report</p>
+                            </div>
+                        </div>
+                        <div class="ai-example">
+                            <div class="ai-example-icon bg-emerald-100">
+                                <i class="fas fa-brain text-emerald-600" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <p class="ai-example-command">"What subjects should I improve?"</p>
+                                <p class="ai-example-result">AI provides personalized recommendations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-visual">
+                    <div class="ai-interface ai-glow" id="aiInterface">
+                        <div class="ai-interface-header">
+                            <span class="ai-status"><span class="ai-dot"></span> AI Assistant Active</span>
+                            <i class="fas fa-robot" aria-hidden="true"></i>
+                        </div>
+                        <div class="ai-chat" id="aiChat">
+                            <div class="ai-message ai-message-bot">
+                                <div class="ai-avatar"><i class="fas fa-robot" aria-hidden="true"></i></div>
+                                <div class="ai-bubble">Hello! How can I help you manage your school today?</div>
+                            </div>
+                        </div>
+                        <div class="ai-input">
+                            <input type="text" id="aiInput" placeholder="Type a command or question..." aria-label="AI command input" />
+                            <button id="aiSendBtn" aria-label="Send message"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <footer>
-    <p>&copy; 2026 School OS. All rights reserved.</p>
-  </footer>
+    <!-- ===== PRICING ===== -->
+    <section class="pricing" id="pricing" aria-label="Pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>Choose the plan that fits your school's needs</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-badge">Popular</div>
+                    <h3>One-Time Setup</h3>
+                    <div class="pricing-price">
+                        <span>GHS 1,000</span>
+                        <span class="pricing-period">one-time</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check" aria-hidden="true"></i> School onboarding</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Initial setup</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Staff training</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Data migration</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Custom configuration</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="handleGetStarted()">Get Started</button>
+                </div>
 
-  <script src="script.js"></script>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Recommended</div>
+                    <h3>Monthly Subscription</h3>
+                    <div class="pricing-price">
+                        <span>GHS 1</span>
+                        <span class="pricing-period">per student / month</span>
+                    </div>
+                    <p class="pricing-example">Example: 500 students = GHS 500/month</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check" aria-hidden="true"></i> All features included</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Unlimited support</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Regular updates</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> AI Assistant included</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Cancel anytime</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="handleDemo()">Request Demo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials" aria-label="Testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What School Leaders Say</h2>
+                <p>Trusted by educational institutions across the country</p>
+            </div>
+            
+            <!-- Tab Filter -->
+            <div class="testimonial-tabs">
+                <button class="tab-btn active" data-tab="all">All</button>
+                <button class="tab-btn" data-tab="principals">Principals</button>
+                <button class="tab-btn" data-tab="teachers">Teachers</button>
+                <button class="tab-btn" data-tab="admins">Administrators</button>
+            </div>
+
+            <div class="testimonial-grid">
+                <div class="testimonial-card" data-type="principals">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                    </div>
+                    <p class="testimonial-quote">"School OS has transformed how we manage our school. The time savings and insights are invaluable."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background: #2563eb;">SO</div>
+                        <div>
+                            <p class="testimonial-name">Dr. Sarah Osei</p>
+                            <p class="testimonial-role">Principal, Accra Academy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-type="teachers">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                    </div>
+                    <p class="testimonial-quote">"The AI features are a game-changer. We've reduced administrative work by 40% and improved parent engagement."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background: #10b981;">KM</div>
+                        <div>
+                            <p class="testimonial-name">Mr. Kwame Mensah</p>
+                            <p class="testimonial-role">Head of Academics, Ghana International School</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-type="admins">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                    </div>
+                    <p class="testimonial-quote">"From attendance to exams, everything is seamless. It's like having an extra team member."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background: #8b5cf6;">AA</div>
+                        <div>
+                            <p class="testimonial-name">Ms. Adwoa Amoah</p>
+                            <p class="testimonial-role">Administrator, Tema Christian School</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TEAM SECTION ===== -->
+    <section class="team" aria-label="Our team">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Our Team</h2>
+                <p>Passionate professionals dedicated to transforming education</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">JD</div>
+                    <h3>James Dadzie</h3>
+                    <p class="team-role">CEO & Founder</p>
+                    <p class="team-bio">15+ years in educational technology</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">AB</div>
+                    <h3>Ama Boadi</h3>
+                    <p class="team-role">CTO</p>
+                    <p class="team-bio">Former Google engineer, EdTech specialist</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">KO</div>
+                    <h3>Kofi Osei</h3>
+                    <p class="team-role">Lead Developer</p>
+                    <p class="team-bio">Full-stack developer with 10+ years experience</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">EA</div>
+                    <h3>Esi Asare</h3>
+                    <p class="team-role">Head of Product</p>
+                    <p class="team-bio">UX expert focused on educational solutions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="faq" id="faq" aria-label="Frequently Asked Questions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about School OS</p>
+            </div>
+            <div class="faq-container" id="faqContainer">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>How long does setup take?</span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Setup typically takes 2-3 business days. We handle the entire onboarding process, including data migration, configuration, and staff training.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Can parents access the platform?</span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. Parents have a dedicated portal to track their child's attendance, grades, fee payments, and receive school announcements.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Is my data secure?</span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes. We use enterprise-grade encryption, secure cloud infrastructure, and comply with data protection regulations to keep your data safe.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Can multiple campuses use one account?</span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, School OS supports multi-campus management with centralized oversight and individual campus controls.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Do you provide training?</span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We provide comprehensive training for all staff members, including live onboarding sessions, video tutorials, and ongoing support.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEWSLETTER ===== -->
+    <section class="newsletter" aria-label="Newsletter signup">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to our newsletter for the latest updates and educational insights</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" id="newsletterEmail" placeholder="Enter your email" required />
+                    <button type="submit" class="btn btn-primary">Subscribe <i class="fas fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="contact" id="contact" aria-label="Contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p>We're here to help you transform your school</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon bg-blue-100"><i class="fas fa-phone text-blue-600" aria-hidden="true"></i></div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+233 20 123 4567</p>
+                            <p>+233 30 234 5678</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon bg-emerald-100"><i class="fas fa-envelope text-emerald-600" aria-hidden="true"></i></div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@schoolos.com</p>
+                            <p>support@schoolos.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon bg-purple-100"><i class="fas fa-whatsapp text-purple-600" aria-hidden="true"></i></div>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <p>+233 50 345 6789</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon bg-orange-100"><i class="fas fa-map-marker-alt text-orange-600" aria-hidden="true"></i></div>
+                        <div>
+                            <h4>Office Location</h4>
+                            <p>123 Independence Avenue</p>
+                            <p>Accra, Ghana</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon bg-red-100"><i class="fas fa-clock text-red-600" aria-hidden="true"></i></div>
+                        <div>
+                            <h4>Business Hours</h4>
+                            <p>Mon - Fri: 8:00 AM - 6:00 PM</p>
+                            <p>Sat: 9:00 AM - 1:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="contactForm" novalidate>
+                        <div class="form-group">
+                            <label for="contactName">Full Name</label>
+                            <input type="text" id="contactName" placeholder="Enter your full name" required aria-required="true" />
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" placeholder="Enter your email" required aria-required="true" />
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSchool">School Name</label>
+                            <input type="text" id="contactSchool" placeholder="Enter your school name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" rows="5" placeholder="Tell us about your school's needs" required aria-required="true"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send Message <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FINAL CTA ===== -->
+    <section class="cta-banner" aria-label="Call to action">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your School?</h2>
+                <p>Join hundreds of schools already using School OS to streamline operations and improve education quality.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary btn-lg" onclick="handleDemo()">Book a Demo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                    <button class="btn btn-outline btn-lg" onclick="handleGetStarted()">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CHAT WIDGET ===== -->
+    <div class="chat-widget" id="chatWidget">
+        <button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
+            <i class="fas fa-comment"></i>
+        </button>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <span><i class="fas fa-circle" style="color: #10b981; font-size: 8px;"></i> Online</span>
+                <button onclick="toggleChat()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-msg chat-msg-bot">
+                    <div class="chat-msg-content">Hello! 👋 How can we help you today?</div>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Type your message..." />
+                <button onclick="sendChatMessage()"><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#home" class="nav-logo" aria-label="School OS Home">
+                        <div class="logo-icon">
+                            <span>S</span>
+                        </div>
+                        <span class="logo-text">School OS</span>
+                    </a>
+                    <p>Empowering schools with intelligent management solutions for the modern educational landscape.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 School OS. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="js/main.js"></script>
+    <script src="js/chat-widget.js"></script>
+    <script src="js/product-tour.js"></script>
+    <script src="js/lightbox.js"></script>
 </body>
 </html>
